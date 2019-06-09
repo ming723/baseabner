@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--
+           Base application theme, dependent on API level. This theme is replaced
+           by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+       -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+        <declare-styleable name="PercentLayout_Layout">
+            <attr format="fraction" name="layout_widthPercent"/>
+            <attr format="fraction" name="layout_heightPercent"/>
+            <attr format="fraction" name="layout_marginPercent"/>
+            <attr format="fraction" name="layout_marginLeftPercent"/>
+            <attr format="fraction" name="layout_marginTopPercent"/>
+            <attr format="fraction" name="layout_marginRightPercent"/>
+            <attr format="fraction" name="layout_marginBottomPercent"/>
+            <attr format="fraction" name="layout_marginStartPercent"/>
+            <attr format="fraction" name="layout_marginEndPercent"/>
+            <attr format="fraction" name="layout_aspectRatio"/>
+        </declare-styleable>
+
+    <!--自定义dialog背景全透明无边框theme -->
+    <style name="Dialog_Transparent" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <style name="MyDialog" parent="Dialog_Transparent">
+        <item name="android:windowBackground">@color/transparent60</item>
+        <item name="android:background">@color/transparent60</item>
+    </style>
+</resources>
