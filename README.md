@@ -453,3 +453,102 @@
                             }
                         });
 ```
+
+### Retrofit上传头像
+```
+@Multipart
+    @POST
+    Observable<ResponseBody> upLoad(@Url String url,
+                                    @HeaderMap Map<String, String> map,
+                                    @Part MultipartBody.Part part);
+
+
+ public HttpUtils upload(String url, File file) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.17.8.100")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request.Builder requestBuilder = request.newBuilder();
+                        requestBuilder.post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"), request.body().toString()));
+                        return chain.proceed(request);
+                    }
+                }).build())
+                .build();
+
+        //Bitmap.createScaledBitmap(Bitmap.CompressFormat.PNG,)
+        HttpService service = retrofit.create(HttpService.class);
+        MediaType mediaType = MediaType.parse("multipart/form-data;charset=UTF-8");
+        RequestBody body = RequestBody.create(mediaType, file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), body);
+        Observable<ResponseBody> ob = service.upLoad(url, headMap, part);
+        ob.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            mHttpListener.success(responseBody.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mHttpListener.fail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return this;
+    }
+
+
+```
+
+### OKHTTP上传头像
+```
+//上传
+    private void uoLoad() {
+        String urlPath = "http://www.abnerming.cn/cert/upload_image.php";
+        File file = new File(imagePath);
+        MediaType mediaType = MediaType.parse("multipart/form-data; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(mediaType);//设置以表单的方式进行提交
+        builder.addFormDataPart("file", "aaa.png", RequestBody.create(MediaType.parse("image/png"), file));
+        builder.addFormDataPart("user_hidden", "abner59825");
+        Request request = new Request.Builder().url(urlPath).post(builder.build()).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "上传成功", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+```
