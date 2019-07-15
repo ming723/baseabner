@@ -8,7 +8,7 @@
 	在  repositories 里添加  mavenCentral()
 	
 	在   dependencies 添加：
-	lasspath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
+	classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
 
 	这个库里AbnerApplication已经做了初始化和分包处理，所以在使用的时候，需要让你的Application来继承这个
 	或者在清单文件里，直接来引入这个
