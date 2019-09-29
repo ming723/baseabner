@@ -291,6 +291,9 @@
 ```
 
             具体代码可运行，打开GestureMainActivity进行查看.
+	    1、如果不改变其它东西，就可以直接跳转到GestureMainActivity，来进行测试
+	    2、手势设置页 ，直接跳转GestureEditActivity
+	    3、手势密码绘制页 GestureVerifyActivity
 ```
 
 ### 如何运用百分比进行适配
